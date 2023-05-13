@@ -27,6 +27,7 @@ describe 'ユーザー新規登録' do
     it "passwordが空では登録できない" do
       @user.password = ''
       @user.valid?
+      binding.pry
       expect(@user.errors.full_messages).to include "Password can't be blank"
     end
 
