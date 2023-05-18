@@ -1,4 +1,6 @@
 class ItemsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create]
+
   def index
   end
 
@@ -8,15 +10,14 @@ class ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    @item.user = current_user
     if @item.save
       redirect_to root_path
     else
       render :new
-      #保存がうまくいかなくても入力済みデータを保持する
+      # 保存がうまくいかなくても入力済みデータを保持する
     end
   end
-  
+
   def edit
   end
 
@@ -26,6 +27,7 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name,:image,:description,:category_id,:condition_id,:postage_id,:prefecture_id,:preparation_day_id,:price).merge(user_id: current_user.id)
+    params.require(:item).permit(:name, :image, :description, :category_id, :condition_id, :postage_id, :prefecture_id,
+                                 :preparation_day_id, :price).merge(user_id: current_user.id)
   end
 end
