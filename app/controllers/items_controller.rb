@@ -47,7 +47,6 @@ class ItemsController < ApplicationController
   end
 
   def check_item_owner
-    @item = Item.find(params[:id])
     return if @item.user_id == current_user.id
 
     # 編集対象商品の出品者IDとログインユーザーのIDを比較
