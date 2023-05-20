@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :edit]
+  before_action :check_item_owner, only: [:edit, :update]
 
   def index
     @items = Item.all.order('created_at DESC')
@@ -15,11 +16,22 @@ class ItemsController < ApplicationController
       redirect_to root_path
     else
       render :new
-      # 保存がうまくいかなくても入力済みデータを保持する
+      # 保存がうまくいかない場合、入力済みデータを保持して登録ページを再表示する
     end
   end
 
   def edit
+    @item = Item.find(params[:id])
+  end
+
+  def update
+    @item = Item.find(params[:id])
+    if @item.update(item_params)
+      redirect_to item_path(@item)
+    else
+      render :edit
+      # 更新がうまくいかない場合、入力データを保持して編集ページを再表示する
+    end
   end
 
   def show
@@ -31,5 +43,14 @@ class ItemsController < ApplicationController
   def item_params
     params.require(:item).permit(:name, :image, :description, :category_id, :condition_id, :postage_id, :prefecture_id,
                                  :preparation_day_id, :price).merge(user_id: current_user.id)
+  end
+
+  def check_item_owner
+    @item = Item.find(params[:id])
+    return if @item.user_id == current_user.id
+
+    # 編集対象商品の出品者IDとログインユーザーのIDを比較
+    redirect_to root_path
+    # 出品者以外の場合、トップページに戻す
   end
 end
