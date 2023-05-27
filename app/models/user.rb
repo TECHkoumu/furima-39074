@@ -13,7 +13,7 @@ class User < ApplicationRecord
   validates :birth_day, presence: true
 
   has_many :items
-  # has_many :orders
+  has_many :orders
 end
 
 # メモ書き エラーメッセージを日本語にするための試み。devise.en.ymlもいじる必要あるかも
