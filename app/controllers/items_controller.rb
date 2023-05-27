@@ -54,6 +54,7 @@ class ItemsController < ApplicationController
 
   def check_item_owner
     return if @item.user_id == current_user.id
+
     # 編集対象商品の出品者IDとログインユーザーのIDを比較
     redirect_to root_path
     # 出品者以外の場合、トップページに戻す
@@ -61,7 +62,6 @@ class ItemsController < ApplicationController
 
   def check_item_sold
     redirect_to root_path if @item.order.present?
-    #売れている商品を編集・削除しようとしたらトップページへ戻す
+    # 売れている商品を編集・削除しようとしたらトップページへ戻す
   end
-
 end
