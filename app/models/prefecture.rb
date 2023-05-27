@@ -6,4 +6,6 @@ class Prefecture < ActiveHash::Base
      *JpPrefecture::Prefecture.all.map { |pref| { id: pref.code, name: pref.name } }]
   include ActiveHash::Associations
   has_many :items
+  has_many :addresses
+  has_many :orders
 end

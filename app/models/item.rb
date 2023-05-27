@@ -1,6 +1,7 @@
 class Item < ApplicationRecord
   belongs_to :user
   has_one_attached :image
+  has_one :order
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category, default: -> { Category.find_by(id: 1) }
   belongs_to :condition, default: -> { Condition.find_by(id: 1) }
