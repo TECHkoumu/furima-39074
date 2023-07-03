@@ -60,7 +60,7 @@ production:
   #adapter:postgresql
   adapter: mysql2
   #url: <%= ENV['DATABASE_URL'] %>
-  database: furima-39074_production
+  database: furima_39074_production
   #username: furima_39074
   username: root
   password: <%= ENV['DATABASE_PASSWORD'] %>
